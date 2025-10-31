@@ -234,6 +234,7 @@ function renderEntries(snapshot) {
     }
   });
   elementsToEmoji();
+  replaceEmojisInText();
 }
 
 
@@ -310,6 +311,26 @@ const elementsToEmoji = () => {
       }
 }}
 };
+
+const replaceEmojisInText = () => {
+  const emojiMap = JSON.parse(myJSON);
+
+  // Scan the entire document
+  const allTextElements = document.body.querySelectorAll('*');
+
+  allTextElements.forEach(el => {
+   
+      let html = el.innerHTML;
+      for (let name in emojiMap) {
+        const regex = new RegExp(`:${name}:`, 'g'); // :star:
+        html = html.replace(regex, `<img class='xd' src='${emojiMap[name]}'>`);
+      }
+      el.innerHTML = html;
+    
+  });
+};
+
+
 </script>
 
 </body>
