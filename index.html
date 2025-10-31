@@ -4,10 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fanfics</title>
   <link rel="icon" href="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.PNG?v=1731478429002" type="image/icon type">
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   
   <style>
   body {
@@ -108,75 +104,32 @@ border: 2px solid  #f74dab; font-size:200%;"> Comments </button>
   <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="" width="30%" height="30%">
 </div>
 
-<script>
-// ====== FIREBASE CONFIG ======
-// Replace the values below with your Firebase project config
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-// Your web app's Firebase configuration
+<script>
+// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDLmVWE3eIbHFqqnpN5bGygjZUf8kB5HeE",
-  authDomain: "fanfics-2f495.firebaseapp.com",
-  projectId: "fanfics-2f495",
-  storageBucket: "fanfics-2f495.firebasestorage.app",
-  messagingSenderId: "634198499413",
-  appId: "1:634198499413:web:fa1bb662798a35e70934dc"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
+// Initialize Firebase (compat)
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// ====== EMOJI SYSTEM ======
-var elements = document.getElementsByClassName("emoji");
-const myJSON = '{"star":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif","nerd":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587","proud":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601","happy":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323"}';
-const myObj = JSON.parse(myJSON);
-for (let i in myObj) {
-  let link = myObj[i]
-  for(var x = 0; x < elements.length; x++) {
-    let name = elements[x].innerHTML;
-    var txt1 = "<img class= 'xd' src=''>"
-    if (name == i){
-      var txt2 = txt1.slice(0, 22) + link + txt1.slice(22,29);
-      elements[x].innerHTML = txt2;
-    }
-  }
-}
-
-// ====== DYNAMIC FIREBASE ENTRIES ======
-const form = document.getElementById('addEntryForm');
-const sections = {
-  canReadAgain: document.getElementById('canReadAgain'),
-  shorties: document.getElementById('shorties'),
-  notWorthReading: document.getElementById('notWorthReading')
-};
-
-// Load entries in real-time
-db.collection('entries').onSnapshot(snapshot => {
-  for (let s in sections) sections[s].innerHTML = '';
+// Example: test reading from Firestore
+db.collection("entries").get().then(snapshot => {
   snapshot.forEach(doc => {
-    const e = doc.data();
-    sections[e.category].innerHTML += `
-      <p class="background">
-        -${e.title} (${e.description})
-        ${e.link ? `<a class="emoji">star</a><a target="_blank" href="${e.link}">link</a><a class="emoji">star</a>` : ""}
-      </p>`;
+    console.log(doc.id, doc.data());
   });
-});
-
-// Add new entry
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  const f = e.target;
-  await db.collection('entries').add({
-    category: f.category.value,
-    title: f.title.value,
-    description: f.description.value,
-    link: f.link.value
-  });
-  f.reset();
 });
 </script>
+
 
 </body>
 </html>
