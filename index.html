@@ -129,6 +129,67 @@ db.collection("entries").get().then(snapshot => {
 });
 </script>
 
+  <script>
+// ====== DYNAMIC FIREBASE ENTRIES WITH DEBUGGING ======
+const form = document.getElementById('addEntryForm');
+const sections = {
+  canReadAgain: document.getElementById('canReadAgain'),
+  shorties: document.getElementById('shorties'),
+  notWorthReading: document.getElementById('notWorthReading')
+};
+
+// Function to render entries on page
+function renderEntries(snapshot) {
+  for (let s in sections) sections[s].innerHTML = '';
+  snapshot.forEach(doc => {
+    const e = doc.data();
+    console.log('Rendering entry:', e); // Debug log
+    if (e.category && sections[e.category]) {
+      sections[e.category].innerHTML += `
+        <p class="background">
+          -${e.title} (${e.description})
+          ${e.link ? `<a class="emoji">star</a><a target="_blank" href="${e.link}">link</a><a class="emoji">star</a>` : ""}
+        </p>`;
+    }
+  });
+}
+
+// Real-time listener
+db.collection('entries').onSnapshot(snapshot => {
+  console.log('Snapshot received:', snapshot.docs.length); // Debug log
+  renderEntries(snapshot);
+});
+
+// Handle new entries
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+  
+  // Make sure a category is selected
+  if (!f.category.value) {
+    alert('Please select a category!');
+    return;
+  }
+  
+  const newEntry = {
+    category: f.category.value,
+    title: f.title.value.trim(),
+    description: f.description.value.trim(),
+    link: f.link.value.trim()
+  };
+  
+  console.log('Adding entry:', newEntry); // Debug log
+  
+  try {
+    await db.collection('entries').add(newEntry);
+    console.log('Entry added successfully!');
+    f.reset();
+  } catch (err) {
+    console.error('Error adding entry:', err);
+  }
+});
+</script>
+
 
 </body>
 </html>
