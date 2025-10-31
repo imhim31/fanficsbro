@@ -189,7 +189,26 @@ form.addEventListener('submit', async e => {
   }
 });
 </script>
+<script>
+var elements = document.getElementsByClassName("emoji");
+var names = '';
+const myJSON = '{"star":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif","nerd":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587","catnono":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3258-toro-big-nono.gif?v=1731489079862","catdancing":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1299-toro-cat-danceheart.gif?v=1731489096338","catangry":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-superangry.gif?v=1731489117693","bearkiss":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3155-pastelbear-kiss.gif?v=1731489101861","beareat":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3609-pastelbear-eat.gif?v=1731489109327","teddybear":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/97835-teddybear.png?v=1731489181476","kirbyyay":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/14220-kirbyyay.gif?v=1731489121227","kirbyyes":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/26459-kirbyyes.gif?v=1731489125073","proud":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601","happy":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323", "ttflushed":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1514-tt-flushed.png?v=1731489129181", "ttthumbsup":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1662-tt-thumbs-up.png?v=1731489131217","ttannoyed":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/2489-tt-annoyed.png?v=1731489135623", "ttangry":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3887-tt-angry.png?v=1731489138960", "ttdrool":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/6754-tt-drool.png?v=1731489142879", "ttsulk":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7290-tt-sulk.png?v=1731489145336","ttrollingeyes":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7576-tt-rolling-eyes.png?v=1731489151338", "ttthinking":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8082-tt-thinking.png?v=1731489153708","ttweep":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8743-tt-weep.png?v=1731489160109","ttshy":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8812-tt-shy.png?v=1731489163671","ttsobbing":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/10529-tt-sobbing.png?v=1731489166715", "ttuhuh":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/39582-uhuh.png?v=1731489177292","ttheh":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/30920-heh.png?v=1731489171141"}';
+const myObj = JSON.parse(myJSON);
+let link = "";
 
+for (let i in myObj) {
+  link = myObj[i]
+  
+  for(var x = 0; x < elements.length; x++) {
+    name = elements[x].innerHTML;
+    var txt1 = "<img class= 'xd' src=''>"
+    if (new String(name).valueOf() ==i){
+        console.log("bok");
+      var txt2 = txt1.slice(0, 22) + link + txt1.slice(22,29);
+        elements[x].innerHTML = txt2;
+    }
+}}
+</script>
 
 </body>
 </html>
