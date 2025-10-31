@@ -62,7 +62,7 @@
 <p class="background">
 -ZnMoO4 (weird, stockhome def, butchlander) might be zinc molybdate idk<br>
 -the construction of homelande (L butchlander in highschool a lot of pedos didnt read all dat)<br>
--of blood and fangs (didnt like, dean and benny, very teenage girl Dean vibes<a class="emoji">nerd</a>)
+-of blood and fangs (didnt like, dean and benny, very teenage girl Dean vibes<a class="emoji">nerd</a>)<br>
 </p>
 
 </div>
@@ -84,6 +84,8 @@
 
 <button onclick="document.location='/fanficsbro/emojis.html'" style="background-color: #ff8f0f;
 border: 2px solid  #f74dab; font-size:200%; "> Emojis </button>
+<button onclick="document.location='/fanficsbro/comments.html'" style="background-color: #ff8f0f;
+border: 2px solid  #f74dab; font-size:200%;"> Comments </button>
 
 <br><br>
 <div class="footer">
@@ -238,10 +240,12 @@ function renderEntries(snapshot) {
 
 
 // Real-time listener
-db.collection('entries').onSnapshot(snapshot => {
-  console.log('Snapshot received:', snapshot.docs.length); // Debug log
-  renderEntries(snapshot);
-});
+db.collection('entries')
+  .orderBy('createdAt') // Oldest first
+  .onSnapshot(snapshot => {
+    console.log('Snapshot received:', snapshot.docs.length);
+    renderEntries(snapshot);
+  });
 
 // Handle new entries
 form.addEventListener('submit', async e => {
@@ -258,7 +262,8 @@ form.addEventListener('submit', async e => {
     category: f.category.value,
     title: f.title.value.trim(),
     description: f.description.value.trim(),
-    link: f.link.value.trim()
+    link: f.link.value.trim(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp() 
   };
   
   console.log('Adding entry:', newEntry); // Debug log
