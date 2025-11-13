@@ -2,117 +2,245 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Fanfics (Kindle Version)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Firebase v8 (compatible with older browsers like Kindle) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Fanfics</title>
+  <link rel="icon" href="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.PNG?v=1731478429002" type="image/icon type">
+  
   <style>
+    /* Simplified CSS for Kindle compatibility */
     body {
-      background-color:#ff9ed4;
-      color: white;
-      font-family: verdana;
-    }
-
-    .h1background {
-      background-color: rgba(247,77,171);
-      color: white;
-      padding: 5px;
-      border: 2px dashed white;
+      background-color: #ff9ed4;
+      margin: 0;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
     }
 
     .background {
-      background-color: rgba(247, 77, 171);
+      background-color: #f74dab;
       color: white;
-      font-family: verdana;
-      border-style: dashed;
-      border-color: white;
-      padding: 2%;
-      margin: 5px;
+      border: 2px dashed white;
+      padding: 15px;
+      margin: 10px 0;
     }
 
-    .emojiDiv {
-      margin-bottom: 20px;
+    .h1background {
+      background-color: #f74dab;
+      color: white;
+      padding: 10px;
+      margin: 20px 0 10px 0;
     }
 
     a {
-      color: #f74dab;
-      text-decoration: none;
+      color: white;
+      text-decoration: underline;
+      padding: 2px 5px;
+      margin: 0 2px;
     }
 
-    img.xd {
-      height: 16px;
+    a[target="_blank"] {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+    }
+
+    button {
+      background-color: #ff8f0f;
+      border: 2px solid #f74dab;
+      font-size: 20px;
+      padding: 10px;
+      margin: 5px;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .footer img {
+      width: 30%;
+      height: auto;
+      margin: 0 5px;
+    }
+
+    .xd {
+      height: 19px;
       vertical-align: middle;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
 
 <body>
-  <h1 class="h1background">Can Read Again</h1>
-  <div id="canReadAgain" class="emojiDiv"></div>
 
-  <h1 class="h1background">Shorties</h1>
-  <div id="shorties" class="emojiDiv"></div>
+<h1 class="h1background">Can read again</h1>
+<div class="background" id="canReadAgain">
+  <div class="loading">Loading entries...</div>
+</div>
+  
+<br>
+<h1 class="h1background">Shorties</h1>
+<div class="background" id="shorties">
+  <div class="loading">Loading entries...</div>
+</div>
 
-  <h1 class="h1background">Not Worth Reading Again</h1>
-  <div id="notWorthReading" class="emojiDiv"></div>
+<br>
+<h1 class="h1background">Not rlly worth reading again</h1>
+<div class="background" id="notWorthReading">
+  <div class="loading">Loading entries...</div>
+</div>
 
-  <script>
-    // Firebase config (same as your main site)
-    var firebaseConfig = {
-      apiKey: "AIzaSyDLmVWE3eIbHFqqnpN5bGygjZUf8kB5HeE",
-      authDomain: "fanfics-2f495.firebaseapp.com",
-      projectId: "fanfics-2f495",
-      storageBucket: "fanfics-2f495.firebasestorage.app",
-      messagingSenderId: "634198499413",
-      appId: "1:634198499413:web:fa1bb662798a35e70934dc"
+<br>
+<h1 class="h1background">Add a New Entry</h1>
+<div class="background">
+  <p><em>Note: Adding new entries is disabled on Kindle. Use a regular browser to add entries.</em></p>
+</div>
+
+<div style="text-align: center;">
+  <button onclick="window.location.href='/fanficsbro/emojis.html'">Emojis</button>
+  <button onclick="window.location.href='/fanficsbro/comments.html'">Comments</button>
+</div>
+
+<br>
+<div class="footer">
+  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
+  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
+  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
+</div>
+
+<!-- Firebase for read-only operations -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDLmVWE3eIbHFqqnpN5bGygjZUf8kB5HeE",
+  authDomain: "fanfics-2f495.firebaseapp.com",
+  projectId: "fanfics-2f495",
+  storageBucket: "fanfics-2f495.firebasestorage.app",
+  messagingSenderId: "634198499413",
+  appId: "1:634198499413:web:fa1bb662798a35e70934dc"
+};
+
+// Initialize Firebase
+try {
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  
+  // Emoji mapping
+  const emojiMap = {
+    'star': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif',
+    'nerd': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587',
+    'proud': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601',
+    'happy': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323'
+  };
+
+  // Function to render entries
+  function renderEntries(snapshot) {
+    const sections = {
+      canReadAgain: document.getElementById('canReadAgain'),
+      shorties: document.getElementById('shorties'),
+      notWorthReading: document.getElementById('notWorthReading')
     };
 
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
+    // Clear loading messages
+    Object.values(sections).forEach(section => {
+      section.innerHTML = '';
+    });
 
-    var sections = {
-      canReadAgain: document.getElementById("canReadAgain"),
-      shorties: document.getElementById("shorties"),
-      notWorthReading: document.getElementById("notWorthReading")
+    // Group entries by category
+    const entriesByCategory = {
+      canReadAgain: [],
+      shorties: [],
+      notWorthReading: []
     };
 
-    // Emoji dictionary (simple replacements)
-    var emojiMap = {
-      "star": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif",
-      "happy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323",
-      "proud": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601",
-      "nerd": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587"
-    };
-
-    function replaceEmojis(text) {
-      for (var key in emojiMap) {
-        var pattern = new RegExp(":" + key + ":", "g");
-        text = text.replace(pattern, "<img class='xd' src='" + emojiMap[key] + "'>");
+    snapshot.forEach(doc => {
+      const entry = doc.data();
+      if (entry.category && entriesByCategory[entry.category]) {
+        entriesByCategory[entry.category].push(entry);
       }
-      return text;
-    }
+    });
 
-    // Load entries and render them (read-only)
-    db.collection("entries").orderBy("timestamp", "asc").get().then(function(snapshot) {
-      snapshot.forEach(function(doc) {
-        var e = doc.data();
-        if (e.category && sections[e.category]) {
-          var html = "- " + e.title + " (" + e.description + ")";
-          if (e.link && e.link !== "") {
-            html += " <img class='xd' src='" + emojiMap["star"] + "'> ";
-            html += "<a target='_blank' href='" + e.link + "'>link</a>";
-            html += " <img class='xd' src='" + emojiMap["star"] + "'>";
-          }
-          html = replaceEmojis(html);
-          sections[e.category].innerHTML += "<p class='background'>" + html + "</p>";
+    // Render each category
+    Object.keys(entriesByCategory).forEach(category => {
+      const section = sections[category];
+      const entries = entriesByCategory[category];
+      
+      if (entries.length > 0) {
+        let html = '';
+        entries.forEach(entry => {
+          const starImg = `<img class="xd" src="${emojiMap['star']}">`;
+          const linkPart = entry.link ? 
+            `${starImg}<a target="_blank" href="${entry.link}">link</a>${starImg}` : '';
+          
+          html += `-${entry.title} (${entry.description}) ${linkPart}<br>`;
+        });
+        section.innerHTML = html;
+      } else {
+        section.innerHTML = '<p>No entries yet.</p>';
+      }
+    });
+  }
+
+  // Load entries once (simpler than real-time listener)
+  db.collection('entries')
+    .orderBy('createdAt')
+    .get()
+    .then(snapshot => {
+      console.log('Loaded entries:', snapshot.size);
+      renderEntries(snapshot);
+    })
+    .catch(error => {
+      console.error('Error loading entries:', error);
+      // Show error message
+      const sections = ['canReadAgain', 'shorties', 'notWorthReading'];
+      sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.innerHTML = '<p>Unable to load entries. Please check internet connection.</p>';
         }
       });
-    }).catch(function(err) {
-      document.body.innerHTML += "<p style='color:red;'>Error loading data: " + err + "</p>";
     });
-  </script>
+
+} catch (error) {
+  console.error('Firebase initialization failed:', error);
+  // Show error message in all sections
+  const sections = ['canReadAgain', 'shorties', 'notWorthReading'];
+  sections.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.innerHTML = '<p>Unable to load entries. Please check internet connection.</p>';
+    }
+  });
+}
+
+// Simple static emoji replacement for any hardcoded content
+function replaceStaticEmojis() {
+  const staticEmojiMap = {
+    'happy': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323',
+    'proud': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601',
+    'nerd': 'https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587'
+  };
+  
+  const emojiSpans = document.querySelectorAll('.emoji');
+  emojiSpans.forEach(span => {
+    const emojiName = span.textContent.trim();
+    if (staticEmojiMap[emojiName]) {
+      span.outerHTML = `<img class="xd" src="${staticEmojiMap[emojiName]}" alt="${emojiName}">`;
+    }
+  });
+}
+
+// Run static emoji replacement
+document.addEventListener('DOMContentLoaded', replaceStaticEmojis);
+</script>
+
 </body>
 </html>
