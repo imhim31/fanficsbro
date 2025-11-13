@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fanfics (Kindle Version)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Firebase v8 (compatible with older browsers like Kindle) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <style>
+    body {
+      background-color:#ff9ed4;
+      color: white;
+      font-family: verdana;
+    }
+
+    .h1background {
+      background-color: rgba(247,77,171);
+      color: white;
+      padding: 5px;
+      border: 2px dashed white;
+    }
+
+    .background {
+      background-color: rgba(247, 77, 171);
+      color: white;
+      font-family: verdana;
+      border-style: dashed;
+      border-color: white;
+      padding: 2%;
+      margin: 5px;
+    }
+
+    .emojiDiv {
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #f74dab;
+      text-decoration: none;
+    }
+
+    img.xd {
+      height: 16px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="h1background">Can Read Again</h1>
+  <div id="canReadAgain" class="emojiDiv"></div>
+
+  <h1 class="h1background">Shorties</h1>
+  <div id="shorties" class="emojiDiv"></div>
+
+  <h1 class="h1background">Not Worth Reading Again</h1>
+  <div id="notWorthReading" class="emojiDiv"></div>
+
+  <script>
+    // Firebase config (same as your main site)
+    var firebaseConfig = {
+      apiKey: "AIzaSyDLmVWE3eIbHFqqnpN5bGygjZUf8kB5HeE",
+      authDomain: "fanfics-2f495.firebaseapp.com",
+      projectId: "fanfics-2f495",
+      storageBucket: "fanfics-2f495.firebasestorage.app",
+      messagingSenderId: "634198499413",
+      appId: "1:634198499413:web:fa1bb662798a35e70934dc"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    var sections = {
+      canReadAgain: document.getElementById("canReadAgain"),
+      shorties: document.getElementById("shorties"),
+      notWorthReading: document.getElementById("notWorthReading")
+    };
+
+    // Emoji dictionary (simple replacements)
+    var emojiMap = {
+      "star": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif",
+      "happy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323",
+      "proud": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601",
+      "nerd": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587"
+    };
+
+    function replaceEmojis(text) {
+      for (var key in emojiMap) {
+        var pattern = new RegExp(":" + key + ":", "g");
+        text = text.replace(pattern, "<img class='xd' src='" + emojiMap[key] + "'>");
+      }
+      return text;
+    }
+
+    // Load entries and render them (read-only)
+    db.collection("entries").orderBy("timestamp", "asc").get().then(function(snapshot) {
+      snapshot.forEach(function(doc) {
+        var e = doc.data();
+        if (e.category && sections[e.category]) {
+          var html = "- " + e.title + " (" + e.description + ")";
+          if (e.link && e.link !== "") {
+            html += " <img class='xd' src='" + emojiMap["star"] + "'> ";
+            html += "<a target='_blank' href='" + e.link + "'>link</a>";
+            html += " <img class='xd' src='" + emojiMap["star"] + "'>";
+          }
+          html = replaceEmojis(html);
+          sections[e.category].innerHTML += "<p class='background'>" + html + "</p>";
+        }
+      });
+    }).catch(function(err) {
+      document.body.innerHTML += "<p style='color:red;'>Error loading data: " + err + "</p>";
+    });
+  </script>
+</body>
+</html>
