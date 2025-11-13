@@ -1,323 +1,245 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Fanfics</title>
-  <link rel="icon" href="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.PNG?v=1731478429002" type="image/icon type">
-  
-  <style>
-    /* Simplified CSS for Kindle compatibility */
-    body {
-      background-color: #ff9ed4;
-      margin: 0;
-      padding: 10px;
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      line-height: 1.5;
-    }
+<html><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .background {
-      background-color: #f74dab;
-      color: white;
-      border: 2px dashed white;
-      padding: 15px;
-      margin: 10px 0;
-    }
+<title>Fanfics</title>
+<link rel="icon" href="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.PNG?v=1731478429002" type="image/icon type">
+<style type="text/css" id="operaUserStyle"></style><script bis_use="true" type="text/javascript" charset="utf-8" data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/traffic.js"></script></head>
 
-    .h1background {
-      background-color: #f74dab;
-      color: white;
-      padding: 10px;
-      margin: 20px 0 10px 0;
-    }
-
-    a {
-      color: white;
-      text-decoration: underline;
-      padding: 2px 5px;
-      margin: 0 2px;
-    }
-
-    a[target="_blank"] {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
-    }
-
-    button {
-      background-color: #ff8f0f;
-      border: 2px solid #f74dab;
-      font-size: 20px;
-      padding: 10px;
-      margin: 5px;
-      color: white;
-    }
-
-    .footer {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .footer img {
-      width: 30%;
-      height: auto;
-      margin: 0 5px;
-    }
-
-    .xd {
-      height: 19px;
-      vertical-align: middle;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 20px;
-    }
-  </style>
-</head>
-
-<body>
+<body __processed_9c182852-f1bf-44e1-b880-5bf64380140f__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQiLCJUSUtUT0siOiJkaXNhYmxlZCIsIkxJTktFRElOIjoiZGlzYWJsZWQiLCJDT05GSUciOiJkaXNhYmxlZCJ9LCJ2ZXJzaW9uIjoiMi4wLjMzIiwic2NvcmUiOjIwMDMzfV0=">
 
 <h1 class="h1background">Can read again</h1>
-<div class="background" id="canReadAgain">
-  -this could be a city (THE GOAT, slowest burn, charlie and dean besties, WHOLSOME ASF <a class="emoji">happy</a>, i love it, bennyxdean)
+<div class="emojiDiv" id="canReadAgain" bis_skin_checked="1">
+
+<p class="background">
+-this could be a city (THE GOAT, slowest burn, charlie and dean besties, WHOLSOME ASF <a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323"></a>, i love it, bennyxdean)
 
 
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">link</a><a class="emoji">star</a>
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a>
 
 <br>
 
--the place where tyrants must lament (most goated butchlander fic unironically <a class="emoji">proud</a>)
+-the place where tyrants must lament (most goated butchlander fic unironically <a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601"></a>)
 
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/40799577/chapters/102230739">link</a><a class="emoji">star</a>
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/40799577/chapters/102230739">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a>
 <br>
 
 -He Won't Tell You That He Loves You (house realizes hes in love w his best bud and starts acting weird, nice one couldnt stop reading) 
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/23894611/chapters/57445597">link</a><a class="emoji">star</a><br>
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/23894611/chapters/57445597">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>
 
 -There's Something About Corbett(hilarious wholesome short cobett/ed)
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/16633565">link</a><a class="emoji">star</a><br>
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/16633565">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>
+
+        -Wayfinding (Ion rlly remember tbh, benny/dean)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/14407302/chapters/33272457">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      
+        -They Smile When They Are Low (Barry/hank, isnt finished but beautiful, heavy hurt/conform, so nice i wasnt mad it was unfinished 😭)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/19057675">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      
+        -Maybe It's the Sound of Something Breaking Up Against Your Walls (Barry/hank hank is a life coach 😭 and its super silly and cute while barry is kinda dying inside)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/16110911?view_full_work=true">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      
+        -Back Again (super long super unfinished SUPER SLOWBURN SUPER ENEMIS TO LOVERS, time travel, actual fire like amazing like ate, lawight)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/30961484?view_full_work=true">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      
+        -The Shape of Me Will Always be You (Will suffering the void after hannibal left, his depression is so 😋😋, got boring after they got reunited tho so i quit at this chapter hannigram)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/5367389?view_full_work=true">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      </p>
 </div>
   
-<br>
+<br><br><br>
 <h1 class="h1background">Shorties</h1>
-<div class="background" id="shorties">
-  
+<div class="emojiDiv" id="shorties" bis_skin_checked="1">
+<p class="background">
 -A Differential Diagnosis for Green Silk
 (When he first notices the green tie, he treats it as a joke. hilson) 
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/180692?view_adult=true">link</a><a class="emoji">star</a><br>
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/180692?view_adult=true">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>
 
 -Late Love in Early Spring
 (House has been pestering Wilson all week with his advice for wooing Cuddy. Wilson doesn’t mind it, but it makes him think about some things… hilson) <br>
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/60611665">link</a><a class="emoji">star</a><br>  
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/60611665">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>  
 
 -the escalated butt dial (highkey hilarious, hilson)
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/45394612?view_full_work=true">link</a><a class="emoji">star</a><br>  
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/45394612?view_full_work=true">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>  
   
 -to search for worry, is to love without deceit (Really short, a little funny, a little sad, hilson)
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/60825844?view_adult=true">link</a><a class="emoji">star</a><br>  
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/60825844?view_adult=true">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>  
   
 -keep me where the light is (lowkey mid, can be read in a night, hilson)
-<a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/46210411">link</a><a class="emoji">star</a><br> 
+<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><a target="_blank" href="https://archiveofourown.org/works/46210411">link</a><a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"></a><br>  
+
+        -Remaster (Short lawlight nothing much happens ngl nice rewrite tho)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/10617633">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      </p>
 </div>
 
-<br>
+<br><br><br>
 <h1 class="h1background">Not rlly worth reading again</h1>
-<div class="background" id="notWorthReading">
-  -ZnMoO4 (weird, stockhome def, butchlander) might be zinc molybdate idk<br>
+<div class="emojiDiv" id="notWorthReading" bis_skin_checked="1">
+<p class="background">
+-ZnMoO4 (weird, stockhome def, butchlander) might be zinc molybdate idk<br>
 -the construction of homelande (L butchlander in highschool a lot of pedos didnt read all dat)<br>
--of blood and fangs (didnt like, dean and benny, very teenage girl Dean vibes<a class="emoji">nerd</a>)<br>
+-of blood and fangs (didnt like, dean and benny, very teenage girl Dean vibes<a class="emoji"><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587"></a>)<br>
+
+        -Stars, Hide Your Fires; Let Not Light See My Black and Deep Desires (Barry/hank too much smut but very nice fluff idk about rereading tho)
+        <img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><a target="_blank" href="https://archiveofourown.org/works/20058286#main">link</a><img class="xd" src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif"><br>
+      </p>
+
 </div>
 
-<br>
-<h1 class="h1background">Add a New Entry</h1>
-<div class="background">
-  <p><em>Note: Adding new entries is disabled on Kindle. Use a regular browser to add entries.</em></p>
-</div>
+<br><br><br>
 
-<div style="text-align: center;">
-  <button onclick="window.location.href='/fanficsbro/emojis.html'">Emojis</button>
-  <button onclick="window.location.href='/fanficsbro/comments.html'">Comments</button>
-</div>
 
-<br>
-<div class="footer">
-  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
-  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
-  <img src="https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/b.png?v=1731478434939" alt="">
-</div>
+<button onclick="document.location='/fanficsbro/emojis.html'" style="background-color: #fff;
+border: 2px solid  #454545; font-size:200%; "> Emojis </button>
+<button onclick="document.location='/fanficsbro/comments.html'" style="background-color: #fff;
+border: 2px solid  #454545; font-size:200%;"> Comments </button>
 
-<!-- Firebase for read-only operations -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<br><br>
+
+  
+<style>
+body {
+  background-color:#c9c9c9;
+background-size: 100% 100%;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+.background{
+background-color: rgba(69, 69, 69);
+color: white;
+font-family:verdana;
+border-style: dashed;
+border-color:white; 
+padding: 2%;
+
+}
+.h1background{
+#background-color: rgba(204, 204, 204, 0.5);
+  background-color:rgba(69, 69, 69);
+color: white;
+}
+.footer{
+    position: absolute;
+    bottom:0.02;
+}
+
+.xd{
+  position:relative;
+  top:2.5%;
+ height:19px;
+background-size: cover;
+background-color: rgba(204, 204, 204, 0);
+}
+ .emojiDiv {
+display: flex;
+}
+
+
+
+
+/* unvisited link */
+a:link {
+  color:#454545;
+  background-color: #fff;
+  text-decoration: none;
+background-size: 100% 100%;
+}
+
+/* visited link */
+a:visited {
+  color:#454545;
+background-color:#fff;
+  text-decoration: none;
+background-size: 100% 100%;
+}
+/* visited link */
+button {
+  color: #454545;
+background-color:#fff;
+  text-decoration: none;
+background-size: 100% 100%;
+}
+  
+  /* Form styles */
+  #addEntryForm {
+    background-color:#454545; 
+    padding:10px;
+    margin-bottom:20px;
+  }
+  #addEntryForm input, #addEntryForm select, #addEntryForm button {
+    display:block; 
+    margin:5px 0; 
+    padding:5px;
+    font-size: 16px;
+  }
+</style>
 
 <script>
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDLmVWE3eIbHFqqnpN5bGygjZUf8kB5HeE",
-  authDomain: "fanfics-2f495.firebaseapp.com",
-  projectId: "fanfics-2f495",
-  storageBucket: "fanfics-2f495.firebasestorage.app",
-  messagingSenderId: "634198499413",
-  appId: "1:634198499413:web:fa1bb662798a35e70934dc"
-};
+var elements = document.getElementsByClassName("emoji");
+var names = '';
+const myJSON = '{"star":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif","nerd":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587","catnono":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3258-toro-big-nono.gif?v=1731489079862","catdancing":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1299-toro-cat-danceheart.gif?v=1731489096338","catangry":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-superangry.gif?v=1731489117693","bearkiss":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3155-pastelbear-kiss.gif?v=1731489101861","beareat":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3609-pastelbear-eat.gif?v=1731489109327","teddybear":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/97835-teddybear.png?v=1731489181476","kirbyyay":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/14220-kirbyyay.gif?v=1731489121227","kirbyyes":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/26459-kirbyyes.gif?v=1731489125073","proud":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601","happy":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323", "ttflushed":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1514-tt-flushed.png?v=1731489129181", "ttthumbsup":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1662-tt-thumbs-up.png?v=1731489131217","ttannoyed":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/2489-tt-annoyed.png?v=1731489135623", "ttangry":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3887-tt-angry.png?v=1731489138960", "ttdrool":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/6754-tt-drool.png?v=1731489142879", "ttsulk":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7290-tt-sulk.png?v=1731489145336","ttrollingeyes":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7576-tt-rolling-eyes.png?v=1731489151338", "ttthinking":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8082-tt-thinking.png?v=1731489153708","ttweep":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8743-tt-weep.png?v=1731489160109","ttshy":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8812-tt-shy.png?v=1731489163671","ttsobbing":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/10529-tt-sobbing.png?v=1731489166715", "ttuhuh":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/39582-uhuh.png?v=1731489177292","ttheh":"https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/30920-heh.png?v=1731489171141"}';
+const myObj = JSON.parse(myJSON);
+let link = "";
 
-// Initialize Firebase
-try {
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+for (let i in myObj) {
+  link = myObj[i]
   
-  // Emoji mapping
-  const emojiMap = {
-  "star": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif",
-  "nerd": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587",
-  "catnono": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3258-toro-big-nono.gif?v=1731489079862",
-  "catdancing": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1299-toro-cat-danceheart.gif?v=1731489096338",
-  "catangry": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-superangry.gif?v=1731489117693",
-  "bearkiss": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3155-pastelbear-kiss.gif?v=1731489101861",
-  "beareat": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3609-pastelbear-eat.gif?v=1731489109327",
-  "teddybear": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/97835-teddybear.png?v=1731489181476",
-  "kirbyyay": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/14220-kirbyyay.gif?v=1731489121227",
-  "kirbyyes": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/26459-kirbyyes.gif?v=1731489125073",
-  "proud": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601",
-  "happy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323",
-  "ttflushed": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1514-tt-flushed.png?v=1731489129181",
-  "ttthumbsup": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1662-tt-thumbs-up.png?v=1731489131217",
-  "ttannoyed": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/2489-tt-annoyed.png?v=1731489135623",
-  "ttangry": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3887-tt-angry.png?v=1731489138960",
-  "ttdrool": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/6754-tt-drool.png?v=1731489142879",
-  "ttsulk": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7290-tt-sulk.png?v=1731489145336",
-  "ttrollingeyes": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7576-tt-rolling-eyes.png?v=1731489151338",
-  "ttthinking": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8082-tt-thinking.png?v=1731489153708",
-  "ttweep": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8743-tt-weep.png?v=1731489160109",
-  "ttshy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8812-tt-shy.png?v=1731489163671",
-  "ttsobbing": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/10529-tt-sobbing.png?v=1731489166715",
-  "ttuhuh": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/39582-uhuh.png?v=1731489177292",
-  "ttheh": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/30920-heh.png?v=1731489171141"
-};
-
-  // Function to render entries
-  function renderEntries(snapshot) {
-    const sections = {
-      canReadAgain: document.getElementById('canReadAgain'),
-      shorties: document.getElementById('shorties'),
-      notWorthReading: document.getElementById('notWorthReading')
-    };
-
-    // Clear loading messages
-    Object.values(sections).forEach(section => {
-      section.innerHTML = '';
-    });
-
-    // Group entries by category
-    const entriesByCategory = {
-      canReadAgain: [],
-      shorties: [],
-      notWorthReading: []
-    };
-
-    snapshot.forEach(doc => {
-      const entry = doc.data();
-      if (entry.category && entriesByCategory[entry.category]) {
-        entriesByCategory[entry.category].push(entry);
-      }
-    });
-
-    // Render each category
-    Object.keys(entriesByCategory).forEach(category => {
-      const section = sections[category];
-      const entries = entriesByCategory[category];
-      
-      if (entries.length > 0) {
-        let html = '';
-        entries.forEach(entry => {
-          const starImg = `<img class="xd" src="${emojiMap['star']}">`;
-          const linkPart = entry.link ? 
-            `${starImg}<a target="_blank" href="${entry.link}">link</a>${starImg}` : '';
-          
-          html += `-${entry.title} (${entry.description}) ${linkPart}<br>`;
-        });
-        section.innerHTML = html;
-      } else {
-        section.innerHTML = '<p>No entries yet.</p>';
-      }
-    });
-  }
-
-  // Load entries once (simpler than real-time listener)
-  db.collection('entries')
-    .orderBy('createdAt')
-    .get()
-    .then(snapshot => {
-      console.log('Loaded entries:', snapshot.size);
-      renderEntries(snapshot);
-    })
-    .catch(error => {
-      console.error('Error loading entries:', error);
-      // Show error message
-      const sections = ['canReadAgain', 'shorties', 'notWorthReading'];
-      sections.forEach(sectionId => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          section.innerHTML = '<p>Unable to load entries. Please check internet connection.</p>';
-        }
-      });
-    });
-
-} catch (error) {
-  console.error('Firebase initialization failed:', error);
-  // Show error message in all sections
-  const sections = ['canReadAgain', 'shorties', 'notWorthReading'];
-  sections.forEach(sectionId => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.innerHTML = '<p>Unable to load entries. Please check internet connection.</p>';
+  for(var x = 0; x < elements.length; x++) {
+    name = elements[x].innerHTML;
+    var txt1 = "<img class= 'xd' src=''>"
+    if (new String(name).valueOf() ==i){
+        console.log("bok");
+      var txt2 = txt1.slice(0, 22) + link + txt1.slice(22,29);
+        elements[x].innerHTML = txt2;
     }
-  });
-}
+}}
 
-// Simple static emoji replacement for any hardcoded content
-function replaceStaticEmojis() {
-  const staticEmojiMap = {
-  "star": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif",
-  "nerd": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-nerd.gif?v=1731489114587",
-  "catnono": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3258-toro-big-nono.gif?v=1731489079862",
-  "catdancing": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1299-toro-cat-danceheart.gif?v=1731489096338",
-  "catangry": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8500-toro-superangry.gif?v=1731489117693",
-  "bearkiss": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3155-pastelbear-kiss.gif?v=1731489101861",
-  "beareat": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3609-pastelbear-eat.gif?v=1731489109327",
-  "teddybear": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/97835-teddybear.png?v=1731489181476",
-  "kirbyyay": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/14220-kirbyyay.gif?v=1731489121227",
-  "kirbyyes": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/26459-kirbyyes.gif?v=1731489125073",
-  "proud": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/33701-tiktokproud.png?v=1731489173601",
-  "happy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8194-tt-happy.png?v=1731489157323",
-  "ttflushed": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1514-tt-flushed.png?v=1731489129181",
-  "ttthumbsup": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/1662-tt-thumbs-up.png?v=1731489131217",
-  "ttannoyed": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/2489-tt-annoyed.png?v=1731489135623",
-  "ttangry": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/3887-tt-angry.png?v=1731489138960",
-  "ttdrool": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/6754-tt-drool.png?v=1731489142879",
-  "ttsulk": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7290-tt-sulk.png?v=1731489145336",
-  "ttrollingeyes": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/7576-tt-rolling-eyes.png?v=1731489151338",
-  "ttthinking": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8082-tt-thinking.png?v=1731489153708",
-  "ttweep": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8743-tt-weep.png?v=1731489160109",
-  "ttshy": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/8812-tt-shy.png?v=1731489163671",
-  "ttsobbing": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/10529-tt-sobbing.png?v=1731489166715",
-  "ttuhuh": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/39582-uhuh.png?v=1731489177292",
-  "ttheh": "https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/30920-heh.png?v=1731489171141"
-};
+const elementsToEmoji = () => {
+  const elements = document.getElementsByClassName("emoji");
+  const myObj = JSON.parse(myJSON);
+  for (let i in myObj) {
+    link = myObj[i]
   
-  const emojiSpans = document.querySelectorAll('.emoji');
-  emojiSpans.forEach(span => {
-    const emojiName = span.textContent.trim();
-    if (staticEmojiMap[emojiName]) {
-      span.outerHTML = `<img class="xd" src="${staticEmojiMap[emojiName]}" alt="${emojiName}">`;
-    }
-  });
-}
+    for(var x = 0; x < elements.length; x++) {
+      name = elements[x].innerHTML;
+      var txt1 = "<img class= 'xd' src=''>"
+      if (new String(name).valueOf() ==i){
+          console.log("bok");
+        var txt2 = txt1.slice(0, 22) + link + txt1.slice(22,29);
+          elements[x].innerHTML = txt2;
+      }
+}}
+};
 
-// Run static emoji replacement
-document.addEventListener('DOMContentLoaded', replaceStaticEmojis);
+const replaceEmojisInText = () => {
+  const emojiMap = JSON.parse(myJSON);
+
+  // Scan the entire document
+  const allTextElements = document.body.querySelectorAll('*');
+
+  allTextElements.forEach(el => {
+   
+      let html = el.innerHTML;
+      for (let name in emojiMap) {
+        const regex = new RegExp(`:${name}:`, 'g'); // <img class='xd' src='https://cdn.glitch.global/381f1ea9-3b68-4215-8c0b-5811be8e5192/a.gif'>
+        html = html.replace(regex, `<img class='xd' src='${emojiMap[name]}'>`);
+      }
+      el.innerHTML = html;
+    
+  });
+};
+
+
 </script>
 
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+</body></html>
