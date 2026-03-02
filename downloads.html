@@ -124,7 +124,7 @@ cursor: url(https://ani.cursors-4u.net/smiley/smi-3/smi283.cur), auto !important
 
 //LALALALALA
 const folders = ["urmom", "urmommmm"]
-fetch('./fanfics')
+fetch('https://api.github.com/repos/imhim31/fanficsbro/contents/fanfics')
   .then(res => res.json())
   .then(files => {
     files.forEach(file => {
