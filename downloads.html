@@ -8,22 +8,7 @@
 </head>
 
 <body>
-<div class="emojiDiv" id="canReadAgainm">
 
-<p class="background">
-Marauders <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Lawlight <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Regulus Black/James Potter <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Destiel <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Byler <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Hucklerobby <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Butchlander <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Barry/Hank <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Benny/Dean <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Hilson <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-Steve Harrington/Eddie Munson <a class="emoji">star</a><a target="_blank" href="https://archiveofourown.org/works/21719980/chapters/51809620">click</a><a class="emoji">star</a><br>
-</p>
-</div>
 
 <div class="emojiDiv" id="canReadAgain">
 
@@ -63,7 +48,7 @@ border-style: dashed;
 border-color:white; 
 padding: 2%;
   width: 50%;
-  margin: 10% auto;
+  margin: 7% auto;
   text-align: center;
 
 }
@@ -122,32 +107,6 @@ cursor: url(https://ani.cursors-4u.net/smiley/smi-3/smi283.cur), auto !important
 
 <script>
 
-//LALALALALA
-const folders = ["urmom", "urmommmm"]
-fetch('https://api.github.com/repos/imhim31/fanficsbro/contents/fanfics')
-  .then(res => res.json())
-  .then(files => {
-    files.forEach(file => {
-      folders.push(file.name);
-    });
-  });
-
-const jajajaj="ehhidk"
-const container = document.getElementById("canReadAgain");
-const pep = document.createElement("p");
-pep.className = "background"
-folders.forEach(f => {
-      const line = document.createElement("span");
-      line.innerHTML = `
-        ${f} 
-        <a class="emoji">star</a>
-        <a target="_blank" href="${jajajaj}">click</a>
-        <a class="emoji">star</a>
-        <br>
-      `;
-      pep.appendChild(line);
-    });
-container.appendChild(pep);
 
 var elements = document.getElementsByClassName("emoji");
 var names = '';
@@ -203,6 +162,37 @@ const replaceEmojisInText = () => {
   });
 };
 
+
+//LALALALALA
+const folders = [];
+const jajajaj = "ehhidk"; // your placeholder link
+const container = document.getElementById("canReadAgain");
+const pep = document.createElement("p");
+pep.className = "background";
+
+fetch('https://api.github.com/repos/imhim31/fanficsbro/contents/fanfics')
+  .then(res => res.json())
+  .then(files => {
+    // append GitHub files to folders
+    files.forEach(file => folders.push(file.name));
+
+    // build the <p> AFTER fetch finishes
+    folders.forEach(f => {
+      const line = document.createElement("span");
+      line.innerHTML = `
+        ${f} 
+        <a class="emoji">star</a>
+        <a target="_blank" href="viewer.html?folder=${f}">click</a>
+        <a class="emoji">star</a>
+        <br>
+      `;
+      pep.appendChild(line);
+    });
+
+    container.appendChild(pep); // append the full <p> to the container
+    elementsToEmoji();
+    replaceEmojisInText();
+  });
 
 
 </script>
