@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <title>Dynamic HTML Viewer</title>
   <style>
-    .userstuff{
+.userstuff{
   background: #fff;
   color: #2a2a2a;
   font: 100%/1.125 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, sans-serif, 'GNU Unifont' !important;
   margin: 1.286em auto !important;
   padding: 0.5em 2.5em 3.5em !important;
-  font-size: 0.9775em !important;
   line-height: 1.7 !important;
   
+}
+
+@media only screen and (max-width: 1000px) {
+  body .userstuff {
+    font-size: 1.5em !important;
+    line-height: 1.6 !important;
+    padding: 0 1.25em !important;
+    
+  }
 }
   </style>
 </head>
@@ -68,4 +76,5 @@
     }
   </script>
 </body>
+
 </html>
