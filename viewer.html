@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic HTML Viewer</title>
+  <style>
+    .userstuff{
+  background: #fff;
+  color: #2a2a2a;
+  font: 100%/1.125 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, sans-serif, 'GNU Unifont' !important;
+  margin: 1.286em auto !important;
+  padding: 0.5em 2.5em 3.5em !important;
+  font-size: 0.9775em !important;
+  line-height: 1.7 !important;
+  
+}
+  </style>
+</head>
+<body>
+  <h2>Files in folder</h2>
+  <div id="fileList"></div>
+  <div id="htmlContainer"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const folderName = params.get("folder");
+    const fileListDiv = document.getElementById("fileList");
+    const htmlContainer = document.getElementById("htmlContainer");
+
+    if (!folderName) {
+      fileListDiv.innerHTML = "<p>No folder selected</p>";
+    } else {
+      // Fetch all files in the folder
+      fetch(`https://api.github.com/repos/imhim31/fanficsbro/contents/fanfics/${folderName}`)
+        .then(res => res.json())
+        .then(items => {
+          const htmlFiles = items.filter(f => f.name.endsWith(".html"));
+
+          if (htmlFiles.length === 0) {
+            fileListDiv.innerHTML = "<p>No HTML files in this folder</p>";
+          } else {
+            htmlFiles.forEach(f => {
+              const p = document.createElement("p");
+              p.textContent = f.name;
+
+              // On click, load the HTML into the container
+              p.addEventListener("click", () => {
+                const url = `https://imhim31.github.io/fanficsbro/fanfics/${folderName}/${f.name}`;
+                fetch(url)
+                  .then(res => res.text())
+                  .then(html => {
+                    htmlContainer.innerHTML = html;
+                  })
+                  .catch(err => {
+                    htmlContainer.innerHTML = "<p>Error loading HTML file</p>";
+                    console.error(err);
+                  });
+              });
+
+              fileListDiv.appendChild(p);
+            });
+          }
+        })
+        .catch(err => {
+          fileListDiv.innerHTML = "<p>Error fetching folder</p>";
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>
